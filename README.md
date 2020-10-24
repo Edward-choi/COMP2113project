@@ -3,7 +3,9 @@ Group 83: KwokKaTin: Kwok Ka Tin(3035684843)
           Edward-choi: Choi Yik Ho(3035684415)
          
 Game Title: Battleship with a Twist
+
 Game Instructions: Normal Battleship rules apply. The twist is that some squares are special squares. Hitting them triggers a special game. Winning the game gives benefits, losing gives harm.
+
                    Example of special game: - RPS
                                             - Number Guessing Game(開口中)
                                             - IQ Question
