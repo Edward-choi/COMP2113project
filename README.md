@@ -1,7 +1,6 @@
 # COMP2113project
-Group 83: KwokKaTin: Kwok Ka Tin(3035684843)
-
-          Edward-choi: Choi Yik Ho(3035684415)
+Group 83: 
+          KwokKaTin: Kwok Ka Tin(3035684843)      Edward-choi: Choi Yik Ho(3035684415)
          
 Game Title: Battleship with a Twist
 
