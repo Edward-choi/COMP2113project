@@ -13,7 +13,7 @@ int main()
     int numWrong = 0;
     while(true){
         cout << "Oops, you have triggered a special event! Now you are going to answer three multiple choice questions. Answer at least two correctly to get the secret reward, or you will receive a random penalty!" << endl;
-        cout << "Question 1: Which US president was not featured in the Mount Rushmore?\nA Franklin D. Roosevelt    B Thomas Jefferson    C Theodore Roosevelt    D Abraham Lincoln" << endl;
+        cout << "Question 1: Which US president was not featured in the Mount Rushmore?\nA Franklin Delano Roosevelt    B Thomas Jefferson    C Theodore Roosevelt    D Abraham Lincoln" << endl;
         cout << "Your Choice: ";
         cin >> s1;
         if (s1=='A') cout << "You are correct! Well done!" << endl;
