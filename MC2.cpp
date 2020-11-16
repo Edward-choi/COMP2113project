@@ -18,7 +18,7 @@ int main()
         cin >> s1;
         if (s1=='C'||s1=='c') cout << "You are correct! Well done!" << endl;
         else{
-            cout << "Wrong Answer! The correct answer is A." << endl;
+            cout << "Wrong Answer! The correct answer is C." << endl;
             numWrong++;
         } 
         cout << "Question 2: Who is the all-time leading scorer in NBA history?\nA Kareem-Abdul-Jabbar    B Kobe Bryant    C Karl Malone    D Lebron James" << endl;
@@ -26,7 +26,7 @@ int main()
         cin >> s2;
         if (s2=='A'||s2=='a') cout << "You are correct! Well done!" << endl;
         else{
-            cout << "Wrong Answer! The correct answer is D." << endl;
+            cout << "Wrong Answer! The correct answer is A." << endl;
             numWrong++;
         } 
         if (numWrong==2) {
@@ -38,7 +38,7 @@ int main()
         cin >> s3;
         if (s3=='D'||s3=='d') cout << "You are correct! Well done!" << endl;
         else{
-            cout << "Wrong Answer! The correct answer is B." << endl;
+            cout << "Wrong Answer! The correct answer is D." << endl;
             numWrong++;
         }
         if (numWrong==2) {
