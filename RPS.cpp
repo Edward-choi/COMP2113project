@@ -2,8 +2,9 @@
 #include <string>
 #include <stdlib.h>
 #include <time.h>
+#include "rps.h"
 using namespace std;
-int main()
+int RPS()
 {
     int setWin = 0;
     int setLose = 0;
