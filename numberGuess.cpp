@@ -3,6 +3,7 @@
 #include <string>
 #include <stdlib.h>
 #include <time.h>
+#include "numberGuess.h"
 using namespace std;
 
 void Opponent(int &low, int &high, int &guess, int target)
@@ -50,7 +51,7 @@ void User(int &low, int &high, int &guess, int target)
     guess = userInput;
 }
 
-int main()
+int NumberGuess()
 {
     srand (time(NULL));
     cout << "Oops, you have triggered a special event! Now you are going to play a number guessing game. Win the game to get the secret reward, or you will receive a random penalty!" << endl;
