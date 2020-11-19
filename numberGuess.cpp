@@ -8,51 +8,6 @@
 #include "user.h"
 using namespace std;
 
-void Opponent(int &low, int &high, int &guess, int target)
-{
-    srand (time(NULL));
-    int result = rand()%(high-low-1) + low + 1;
-    if (result > target) {
-        high = result;
-        cout << "Opponent's guess: " << result << "\nRange: " << low << "-" << high << endl;
-    }
-    else if (result < target) {
-        low = result;
-        cout << "Opponent's guess: " << result << "\nRange: " << low << "-" << high << endl;
-    }
-    else if (result == target) {
-        cout << "Opponent's guess: " << result << endl;
-        cout << "BOOM! The magic number is " << target << ". You win!" << endl;
-    }
-    guess = result;
-}
-
-void User(int &low, int &high, int &guess, int target)
-{
-    cout << "Please pick a number from " << low << "-" << high << " exclusive: ";
-    int userInput;
-    cin >> userInput;
-    while (low >= userInput || userInput >= high){
-        cout << "Input out of range. Please pick a number from " << low << "-" << high << " exclusive: ";
-        cin >> userInput;
-    }
-    if (low < userInput && userInput < high){
-        if (userInput > target) {
-            high = userInput;
-            cout << "Your guess: " << userInput << "\nRange: " << low << "-" << high << endl;
-        }
-        else if (userInput < target) {
-            low = userInput;
-            cout << "Your guess: " << userInput << "\nRange: " << low << "-" << high << endl;
-        }
-        else if (userInput == target) {
-            cout << "Your guess: " << userInput << endl;
-            cout << "BOOM! The magic number is " << target << ". You lose!" << endl;
-        }
-    }
-    guess = userInput;
-}
-
 int NumberGuess()
 {
     srand (time(NULL));
