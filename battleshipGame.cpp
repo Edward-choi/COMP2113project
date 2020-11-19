@@ -358,9 +358,9 @@ void playerAttack(string realboard[11][11], string output[11][11]) {
                 output[x][y] = "X";
                 showBoard(output);
             } else if (realboard[x][y] == "N") {
-                cout << "Number Guess";
+                NumberGuess();
             } else if (realboard[x][y] == "R") {
-                cout << "RPS";
+                RPS();
             } else if (realboard[x][y] == "Q") {
                 cout << "MCQ";
             } else {
