@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include "numberGuess.h"
+#include "opponent.h"
+#include "user.h"
 using namespace std;
 
 void Opponent(int &low, int &high, int &guess, int target)
