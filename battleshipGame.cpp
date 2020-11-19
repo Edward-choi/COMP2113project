@@ -3,7 +3,7 @@
 #include "mc1.h"
 #include "mc2.h"
 #include "mc3.h"
-#inlucde "mc4.h"
+#include "mc4.h"
 #include "rps.h"
 #include "numberGuess.h"
 
