@@ -1,5 +1,12 @@
 #include <iostream>
 #include <string>
+#include "mc1.h"
+#include "mc2.h"
+#include "mc3.h"
+#inlucde "mc4.h"
+#include "rps.h"
+#include "numberGuess.h"
+
 using namespace std;
 
 struct ships {
@@ -277,6 +284,25 @@ void initializeCPU(string realboard[11][11], string outputboard[11][11]) {
     }
 }
 
+void specialSquares(string board[11][11]) {
+    int k = 0;
+    while (k < 10) {
+        int x = (rand() % 10) + 1, y = (rand() % 10) + 1;
+        if (board[x][y] == "~") {
+            if (k > 5) {
+                board[x][y] = "Q";
+            } else if (k > 2) {
+                board[x][y] = "R";
+            } else {
+                board[x][y] = "N";
+            }
+        } else {
+            continue;
+        }
+        k++;
+    }
+}
+
 void shipLocate(string board[11][11], string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
     int c = 0, b = 0, d = 0, s = 0, p = 0;
     for (int i = 1; i < 11; i++) {
@@ -331,6 +357,12 @@ void playerAttack(string realboard[11][11], string output[11][11]) {
                 cout << "You missed" << '\n';
                 output[x][y] = "X";
                 showBoard(output);
+            } else if (realboard[x][y] == "N") {
+                cout << "Number Guess";
+            } else if (realboard[x][y] == "R") {
+                cout << "RPS";
+            } else if (realboard[x][y] == "Q") {
+                cout << "MCQ";
             } else {
                 cout << "You hit your opponent's ship!" << '\n';
                 output[x][y] = "o";
@@ -446,7 +478,8 @@ int main() {
     cout << "----------Place Your Ships----------" << '\n';
     initializePlayer(playerBoard);
     initializeCPU(cpuRealBoard, cpuoutputBoard);
-
+    specialSquares(cpuRealBoard);
+    showBoard(cpuRealBoard);
     shipLocate(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol);
     shipLocate(cpuRealBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol);
     cout << "----------Attack Phase----------" << '\n';
