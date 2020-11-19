@@ -2,9 +2,10 @@
 #include <string>
 #include <stdlib.h>
 #include <time.h>
+#include "mc4.h"
 using namespace std;
 
-int main()
+int MC4()
 {
     srand (time(NULL));
     char s1;
