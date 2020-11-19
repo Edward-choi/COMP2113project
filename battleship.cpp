@@ -2,6 +2,14 @@
 #include <string>
 using namespace std;
 
+struct ships {
+    string Carrier[5];
+    string Battleship[4];
+    string Destroyer[3];
+    string Submarine[3];
+    string Patrol[2];
+} cpu;
+
 void showBoard(string board[11][11]) {
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 11; j++) {
@@ -16,7 +24,7 @@ void place_Boats(string board[11][11], string x, int k) {
     cout << "From which square to which square? ";
     string start;
     string end;
-    string empty = "O";
+    string empty = "~";
     int count = 0;
     cin >> start >> end;
     int x1 = int(start[0]) - 65;
@@ -64,16 +72,14 @@ void place_Boats(string board[11][11], string x, int k) {
     showBoard(board);
 }
 
-int main()
-{
-    string board[11][11];
-    board[0][0] = '/';
+void initializePlayer(string board[11][11]) {
     
+    board[0][0] = '/';
     for (int i = 1; i < 11; i++) {
         board[i][0] = char(64+i);
         board[0][i] = to_string(i-1);       
         for (int j = 1; j < 11; j++) {
-            board[i][j] = "O";
+            board[i][j] = "~";
         }
     }
     
@@ -88,6 +94,184 @@ int main()
     place_Boats(board, "S", 3);
     cout << "Place your Patrol Boat (2 squares)" << '\n';
     place_Boats(board, "P", 2);
-    
-    return 0;
 }
+
+void CPUplaceCarrier(string board[11][11]) {
+    int x = rand() % 10;
+    int y = rand() % 10;
+    if (rand()%2 == 0) {
+        if (y > 5 || y < 0 || x > 9 || x < 0) {
+            CPUplaceCarrier(board);
+        } else {
+            for (int i = y; i < y+5; i++) {
+                board[x][i] = "C";
+            }
+        }
+    } else {
+        if (x > 5 || x < 0 || y > 9 || y < 0) {
+            CPUplaceCarrier(board);
+        } else {
+            for (int i = x; i < x+5; i++) {
+                board[i][y] = "C";
+            }
+        }
+    }
+}
+
+void CPUplaceBattleship(string board[11][11]) {
+    bool overlap = false;
+    int x = rand() % 10;    
+    int y = rand() % 10;
+    if (rand()%2 == 1) {
+        if (y > 6 || y < 0 || x > 9 || x < 0) {
+            CPUplaceBattleship(board);
+        } else {
+            for (int i = y; i < y+4; i++) {
+                if (board[x][i] != "~") {
+                    overlap = true;
+                }
+            }
+            if (overlap) {
+                CPUplaceBattleship(board);
+            } else {
+                for (int i = y; i < y+4; i++) {
+                    board[x][i] = "B";
+                }
+            }
+        }
+    } else {
+        if(x>6 || x<0 || y>9 || y<0) {
+            CPUplaceBattleship(board);
+        } else {
+            for (int i = x; i < x+4; i++) {
+                if (board[i][y] != "~") {
+                    overlap = true;
+                }
+            }
+            if (overlap) {
+                CPUplaceBattleship(board);
+            } else {
+                for (int i = x; i < x+4; i++) {
+                    board[i][y] = "B";
+                }
+            }
+        }
+    }
+}
+
+void CPUplaceSubmaroyer(string board[11][11], string ship) {
+    bool overlap = false;
+    int x = rand() % 10;    
+    int y = rand() % 10;
+    if (rand()%2 == 1) {
+        if (y > 7 || y < 0 || x > 9 || x < 0) {
+            CPUplaceSubmaroyer(board, ship);
+        } else {
+            for (int i = y; i < y+3; i++) {
+                if (board[x][i] != "~") {
+                    overlap = true;
+                }
+            }
+            if (overlap) {
+                CPUplaceSubmaroyer(board, ship);
+            } else {
+                for (int i = y; i < y+3; i++) {
+                    board[x][i] = ship;
+                }
+            }
+        }
+    } else {
+        if(x>7 || x<0 || y>9 || y<0) {
+            CPUplaceSubmaroyer(board, ship);
+        } else {
+            for (int i = x; i < x+3; i++) {
+                if (board[i][y] != "~") {
+                    overlap = true;
+                }
+            }
+            if (overlap) {
+                CPUplaceSubmaroyer(board, ship);
+            } else {
+                for (int i = x; i < x+3; i++) {
+                    board[i][y] = ship;
+                }
+            }
+        }
+    }
+}
+
+void CPUplacePatrol(string board[11][11]) {
+    bool overlap = false;
+    int x = rand() % 10;    
+    int y = rand() % 10;
+    if (rand()%2 == 1) {
+        if (y > 8 || y < 0 || x > 9 || x < 0) {
+            CPUplacePatrol(board);
+        } else {
+            for (int i = y; i < y+2; i++) {
+                if (board[x][i] != "~") {
+                    overlap = true;
+                }
+            }
+            if (overlap) {
+                CPUplacePatrol(board);
+            } else {
+                for (int i = y; i < y+2; i++) {
+                    board[x][i] = "P";
+                }
+            }
+        }
+    } else {
+        if(x>8 || x<0 || y>9 || y<0) {
+            CPUplacePatrol(board);
+        } else {
+            for (int i = x; i < x+2; i++) {
+                if (board[i][y] != "~") {
+                    overlap = true;
+                }
+            }
+            if (overlap) {
+                CPUplacePatrol(board);
+            } else {
+                for (int i = x; i < x+2; i++) {
+                    board[i][y] = "P";
+                }
+            }
+        }
+    }
+}
+
+void initializeCPU(string realboard[11][11], string outputboard[11][11]) {
+    realboard[0][0] = '/';
+    for (int i = 1; i < 11; i++) {
+        realboard[i][0] = char(64+i);
+        realboard[0][i] = to_string(i-1);       
+        for (int j = 1; j < 11; j++) {
+            realboard[i][j] = "~";
+        }
+    }
+    CPUplaceCarrier(realboard);
+    CPUplaceBattleship(realboard);
+    CPUplaceSubmaroyer(realboard, "D");
+    CPUplaceSubmaroyer(realboard, "S");
+    CPUplacePatrol(realboard);
+    
+    outputboard[0][0] = '/';
+    for (int i = 1; i < 11; i++) {
+        outputboard[i][0] = char(64+i);
+        outputboard[0][i] = to_string(i-1);       
+        for (int j = 1; j < 11; j++) {
+            outputboard[i][j] = "~";
+        }
+    }
+}
+
+int main() {
+    string playerBoard[11][11];
+    string cpuRealBoard[11][11];
+    string cpuoutputBoard[11][11];
+    string location[17];
+    initializePlayer(playerBoard);
+    initializeCPU(cpuRealBoard, cpuoutputBoard);
+}
+
