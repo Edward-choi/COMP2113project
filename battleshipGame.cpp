@@ -328,9 +328,9 @@ void shipLocate(string board[11][11], string Carrier[5], string Battleship[4], s
     }
 }
 
-void playerAttack(string realboard[11][11], string output[11][11]) {
+void playerAttack(string realboard[11][11], string output[11][11], int &k) {
     cout << "Your turn to attck!" << '\n';
-    while (bool e = true) {
+    while (true) {
         showBoard(output);
         cout << "Enter the square you'd like to attack: ";
         string index;
@@ -358,14 +358,26 @@ void playerAttack(string realboard[11][11], string output[11][11]) {
                 output[x][y] = "X";
                 showBoard(output);
             } else if (realboard[x][y] == "N") {
-                cout << "Number Guess";
+                NumberGuess();
                 output[x][y] = "!";
             } else if (realboard[x][y] == "R") {
-                cout << "RPS";
+                RPS();
                 output[x][y] = "!";
             } else if (realboard[x][y] == "Q") {
-                cout << "MCQ";
                 output[x][y] = "!";
+                if (k == 1) {
+                    MC1();
+                    k++;
+                } else if (k == 2) {
+                    MC2();
+                    k++;
+                } else if (k == 3) {
+                    MC3();
+                    k++;
+                } else if (k == 4) {
+                    MC4();
+                    k++;
+                }
             } else {
                 cout << "You hit your opponent's ship!" << '\n';
                 output[x][y] = "o";
@@ -476,6 +488,7 @@ int main() {
     string cpuRealBoard[11][11];
     string cpuoutputBoard[11][11];
     bool end = true;
+    int q = 1;
     string * winner = new string;
     cout << "----------Place Your Ships----------" << '\n';
     initializePlayer(playerBoard);
@@ -493,7 +506,7 @@ int main() {
     }
     while (end) {
         if (k % 2 == 1) {
-            playerAttack(cpuRealBoard, cpuoutputBoard);
+            playerAttack(cpuRealBoard, cpuoutputBoard, q);
             if (noShips(cpuoutputBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol)) {
                 *winner = "Player 1";
                 end = false;
