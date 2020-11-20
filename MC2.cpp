@@ -14,7 +14,7 @@ int MC2()
     int numWrong = 0;
     while(true){
         cout << "Oops, you have triggered a special event! Now you are going to answer three multiple choice questions. Answer at least two correctly to get the secret reward, or you will receive a random penalty!" << endl;
-        cout << "Question 1: Which one is the smallest conntry in the world?\nA Tuvalu    B Principality of Liechtenstein    C Vatican City State    D Republic of San Marino" << endl;
+        cout << "Question 1: Which one is the smallest conntry in the world?\nA Tuvalu    B Liechtenstein    C Vatican City    D San Marino" << endl;
         cout << "Your Choice: ";
         cin >> s1;
         if (s1=='C'||s1=='c') cout << "You are correct! Well done!" << endl;
