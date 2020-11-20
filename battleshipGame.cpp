@@ -328,7 +328,109 @@ void shipLocate(string board[11][11], string Carrier[5], string Battleship[4], s
     }
 }
 
-void playerAttack(string realboard[11][11], string output[11][11], int &k) {
+string showShip(string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
+    int k = rand() % 5, i = rand(), xc;
+    char x, y;
+    string location = "";
+    if (k == 0) {
+        i = i % 5;
+        xc = int(Carrier[i][0]);
+        x = char(xc+17);
+        y = Carrier[i][1];
+        location.append(1, x);
+        location.append(1, y);
+    } else if (k == 1) {
+        i = i % 4;
+        xc = int(Battleship[i][0]);
+        x = char(xc+17);
+        y = Battleship[i][1];
+        location.append(1, x);
+        location.append(1, y);
+    } else if (k == 2) {
+        i = i % 3;
+        xc = int(Destroyer[i][0]);
+        x = char(xc+17);
+        y = Destroyer[i][1];
+        location.append(1, x);
+        location.append(1, y);
+    } else if (k == 3) {
+        i = i % 3;
+        xc = int(Submarine[i][0]);
+        x = char(xc+17);
+        y = Submarine[i][1];
+        location.append(1, x);
+        location.append(1, y);
+    } else {
+        i = i % 2;
+        xc = int(Patrol[i][0]);
+        x = char(xc+17);
+        y = Patrol[i][1];
+        location.append(1, x);
+        location.append(1, y);
+    }
+    return location;
+}
+
+void shipExplode(string board[11][11], string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
+    int x, y, k;
+    k = rand() % 5;
+    if (k == 0) {
+        for (int i = 0; i < 5; i++) {
+            x = int(Carrier[i][0]) - 47;
+            y = int(Carrier[i][1]) - 47;
+            board[x][y] = "o";
+        }
+    } else if (k == 1) {
+        for (int i = 0; i < 4; i++) {
+            x = int(Battleship[i][0]) - 47;
+            y = int(Battleship[i][1]) - 47;
+            board[x][y] = "o";
+        }
+    } else if (k == 2) {
+        for (int i = 0; i < 3; i++) {
+            x = int(Destroyer[i][0]) - 47;
+            y = int(Destroyer[i][1]) - 47;
+            board[x][y] = "o";
+        }
+    } else if (k == 3) {
+        for (int i = 0; i < 3; i++) {
+            x = int(Submarine[i][0]) - 47;
+            y = int(Submarine[i][1]) - 47;
+            board[x][y] = "o";
+        }
+    } else {
+        for (int i = 0; i < 2; i++) {
+            x = int(Patrol[i][0]) - 47;
+            y = int(Patrol[i][1]) - 47;
+            board[x][y] = "o";
+        }
+    }
+}
+
+void cpuAttack(string board[11][11]) {
+    int x = rand() % 10 + 1, y = rand() % 10 + 1;
+    string index;
+    if (board[x][y] == "o" || board[x][y] == "X") {
+        cpuAttack(board);
+    } else {
+        cout << "Player 2's turn to attack!" << '\n';
+        char xcoor = char(x+64), ycoor = char(y+47);
+        index.append(1, xcoor);
+        index.append(1, ycoor);
+        cout << "Player 2 attacked " << index << "!" << '\n';
+        if (board[x][y] == "~") {
+            cout << "Player 2 missed!" << '\n';
+            board[x][y] = "X";
+            showBoard(board);
+        } else {
+            cout << "Player 2 hit your ship!" << '\n';
+            board[x][y] = "o";
+            showBoard(board);
+        }
+    }
+}
+
+void playerAttack(string realboard[11][11], string output[11][11], string playerBoard[11][11], int &k, string C[5], string B[4], string D[3], string S[3], string P[2], string pC[5], string pB[4], string pD[3], string pS[3], string pP[2]) {
     cout << "Your turn to attck!" << '\n';
     while (true) {
         showBoard(output);
@@ -358,24 +460,47 @@ void playerAttack(string realboard[11][11], string output[11][11], int &k) {
                 output[x][y] = "X";
                 showBoard(output);
             } else if (realboard[x][y] == "N") {
-                NumberGuess();
                 output[x][y] = "!";
+                if (NumberGuess() == 0) {
+                    cout << "One of your opponent's ships exploded and sunk itself" << '\n';
+                    shipExplode(output, C, B, D, S, P);
+                } else {
+                    cout << "One of your ships exploded and sunk itself" << '\n';
+                    shipExplode(playerBoard, pC, pB, pD, pS, pP);
+                }
+                
             } else if (realboard[x][y] == "R") {
-                RPS();
                 output[x][y] = "!";
+                if (RPS() == 0) {
+                    continue;
+                } else {
+                    cpuAttack(playerBoard);
+                }
             } else if (realboard[x][y] == "Q") {
                 output[x][y] = "!";
                 if (k == 1) {
-                    MC1();
+                    int mc = MC1();
+                    if (mc == 0) {
+                        cout << "One of your opponent's ship is at " << showShip(C, B, D, S, P) << '\n';
+                    }
                     k++;
                 } else if (k == 2) {
-                    MC2();
+                    int mc = MC2();
+                    if (mc == 0) {
+                        cout << "One of your opponent's ship is at " << showShip(C, B, D, S, P) << '\n';
+                    }
                     k++;
                 } else if (k == 3) {
-                    MC3();
+                    int mc = MC3();
+                    if (mc == 0) {
+                        cout << "One of your opponent's ship is at " << showShip(C, B, D, S, P) << '\n';
+                    }
                     k++;
                 } else if (k == 4) {
-                    MC4();
+                    int mc = MC4();
+                    if (mc == 0) {
+                        cout << "One of your opponent's ship is at " << showShip(C, B, D, S, P) << '\n';
+                    }
                     k++;
                 }
             } else {
@@ -385,29 +510,6 @@ void playerAttack(string realboard[11][11], string output[11][11], int &k) {
             }
         }
         break;
-    }
-}
-
-void cpuAttack(string board[11][11]) {
-    int x = rand() % 10 + 1, y = rand() % 10 + 1;
-    string index;
-    if (board[x][y] == "o" || board[x][y] == "X") {
-        cpuAttack(board);
-    } else {
-        cout << "Player 2's turn to attack!" << '\n';
-        char xcoor = char(x+64), ycoor = char(y+47);
-        index.append(1, xcoor);
-        index.append(1, ycoor);
-        cout << "Player 2 attacked " << index << "!" << '\n';
-        if (board[x][y] == "~") {
-            cout << "Player 2 missed!" << '\n';
-            board[x][y] = "X";
-            showBoard(board);
-        } else {
-            cout << "Player 2 hit your ship!" << '\n';
-            board[x][y] = "o";
-            showBoard(board);
-        }
     }
 }
 
@@ -497,7 +599,7 @@ int main() {
     showBoard(cpuRealBoard);
     shipLocate(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol);
     shipLocate(cpuRealBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol);
-    cout << "----------Attack Phase----------" << '\n';
+    cout << "----------Attack your Opponent----------" << '\n';
     int k = rand() % 10;
     if (k % 2 == 1) {
         cout << "Player 1 (You) attack first" << '\n';
@@ -506,7 +608,7 @@ int main() {
     }
     while (end) {
         if (k % 2 == 1) {
-            playerAttack(cpuRealBoard, cpuoutputBoard, q);
+            playerAttack(cpuRealBoard, cpuoutputBoard, playerBoard, q, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol);
             if (noShips(cpuoutputBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol)) {
                 *winner = "Player 1";
                 end = false;
