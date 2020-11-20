@@ -44,10 +44,9 @@ int MC1()
         }
         if (numWrong==2) {
             cout << "You have got two answers wrong. Better luck next time!" << endl;
-            break;
+            return 1;
         }
         cout << "Congratulations! You pass the challenge!" << endl;
-        break;
+        return 0;
     }
 }
-
