@@ -19,8 +19,12 @@ int NumberGuess()
     int low = 0;
     while (true){
         User(low, high, guess, target);
-        if (guess==target) break;
+        if (guess==target) {
+            return 1;
+        }
         Opponent(low, high, guess, target);
-        if (guess==target) break;
+        if (guess==target) {
+            return 0;
+        }
     }
 }
