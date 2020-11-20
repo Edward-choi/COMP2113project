@@ -349,7 +349,7 @@ void playerAttack(string realboard[11][11], string output[11][11]) {
             cout << "Column index must be between 0 and 9!" << '\n';
             continue;
         }
-        if (output[x][y] == "X" || output[x][y] == "o") {
+        if (output[x][y] != "~") {
             cout << "That square has already been hit. Try again" << '\n';
             continue;
         } else {
@@ -358,11 +358,14 @@ void playerAttack(string realboard[11][11], string output[11][11]) {
                 output[x][y] = "X";
                 showBoard(output);
             } else if (realboard[x][y] == "N") {
-                NumberGuess();
+                cout << "Number Guess";
+                output[x][y] = "!";
             } else if (realboard[x][y] == "R") {
-                RPS();
+                cout << "RPS";
+                output[x][y] = "!";
             } else if (realboard[x][y] == "Q") {
                 cout << "MCQ";
+                output[x][y] = "!";
             } else {
                 cout << "You hit your opponent's ship!" << '\n';
                 output[x][y] = "o";
@@ -379,17 +382,17 @@ void cpuAttack(string board[11][11]) {
     if (board[x][y] == "o" || board[x][y] == "X") {
         cpuAttack(board);
     } else {
-        cout << "Opponent's turn to attack!" << '\n';
+        cout << "Player 2's turn to attack!" << '\n';
         char xcoor = char(x+64), ycoor = char(y+47);
         index.append(1, xcoor);
         index.append(1, ycoor);
-        cout << "Your opponent attacked " << index << "!" << '\n';
+        cout << "Player 2 attacked " << index << "!" << '\n';
         if (board[x][y] == "~") {
-            cout << "Your opponent missed!" << '\n';
+            cout << "Player 2 missed!" << '\n';
             board[x][y] = "X";
             showBoard(board);
         } else {
-            cout << "Your ship was hit!" << '\n';
+            cout << "Player 2 hit your ship!" << '\n';
             board[x][y] = "o";
             showBoard(board);
         }
@@ -472,9 +475,8 @@ int main() {
     string playerBoard[11][11];
     string cpuRealBoard[11][11];
     string cpuoutputBoard[11][11];
-    string location[17];
     bool end = true;
-    bool winner;
+    string * winner = new string;
     cout << "----------Place Your Ships----------" << '\n';
     initializePlayer(playerBoard);
     initializeCPU(cpuRealBoard, cpuoutputBoard);
@@ -484,29 +486,33 @@ int main() {
     shipLocate(cpuRealBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol);
     cout << "----------Attack Phase----------" << '\n';
     int k = rand() % 10;
+    if (k % 2 == 1) {
+        cout << "Player 1 (You) attack first" << '\n';
+    } else {
+        cout << "Player 2 (Your Opponent) attack first" << '\n';
+    }
     while (end) {
-        if (k % 2 == 0) {
+        if (k % 2 == 1) {
             playerAttack(cpuRealBoard, cpuoutputBoard);
             if (noShips(cpuoutputBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol)) {
+                *winner = "Player 1";
                 end = false;
-                winner = true;
             } else {
                 k++;
             }
         } else {
             cpuAttack(playerBoard);
             if (noShips(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol)) {
+                *winner = "Player 2";
                 end = false;
-                winner = false;
             } else {
                 k++;
             }
         }
     }
-    if (winner) {
-        cout << "You have sunk all you opponent's ships. YOU WIN!!!";
-    } else {
-        cout << "Your opponent has sunk all your ships. You Lose";
-    }
+    cout << "The winner is......" << '\n' << '\n';
+    cout << *winner << "!!!";
+    delete winner;
+    winner = 0;
     return 0;
 }
