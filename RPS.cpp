@@ -42,6 +42,13 @@ int RPS()
             cout << "Win: " << setWin << "   Lose: " << setLose << endl;
         }
     }
-    if (setWin == 2) cout << "Congratulations! You win the Game! You are rewarded an extra turn!" << endl;
-    if (setLose == 2) cout << "（●´∧｀●） You lose the Game! As a penalty, your next turn is skipped. Better luck next time!" << endl;
+    if (setWin == 2) {
+        cout << "Congratulations! You win the Game! You are rewarded an extra turn!" << endl;
+        return 0;
+    }
+    if (setLose == 2) {
+        cout << "（●´∧｀●） You lose the Game! As a penalty, your next turn is skipped. Better luck next time!" << endl;
+        return 1;
+    }
+   
 }
