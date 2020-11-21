@@ -28,4 +28,4 @@ Features to be implemented:
 5. Program codes in multiple files
     Special games stored in multiple files and access them using Makefile
    
-Compilation instructions: Down all Makefile, .cpp and .h files. Compile them with the command "$ make main". Then all .cpp and .h files will be compiled automatically.
+Compilation instructions: Download all Makefile, .cpp and .h files. Compile them with the command "$ make main". Then all .cpp and .h files will be compiled automatically.
