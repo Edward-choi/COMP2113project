@@ -530,7 +530,7 @@ void load(char board[11][11], string file) {
 
 //Computer attacks the player's grid
 void cpuAttack(char board[11][11], string C[5], string B[4], string D[3], string S[3], string P[2]) {
-    cout << "Player 2's turn to attack!" << '\n';
+    cout << "Wei Kingdom's turn to attack!" << '\n';
     while (true) {
         int x = rand() % 10 + 1, y = rand() % 10 + 1;
         string index;
@@ -540,13 +540,13 @@ void cpuAttack(char board[11][11], string C[5], string B[4], string D[3], string
             char xcoor = char(x+64), ycoor = char(y+47);
             index.append(1, xcoor);
             index.append(1, ycoor);
-            cout << "Player 2 attacked " << index << "!" << '\n';
+            cout << "Wei Kingdom attacked " << index << "!" << '\n';
             if (board[x][y] == '~') {
-                cout << "Player 2 missed! Your turn." << '\n';
+                cout << "Wei Kingdom missed! Your turn." << '\n';
                 board[x][y] = 'X';
                 showBoard(board);
             } else {
-                cout << "Player 2 hit your ship! ";
+                cout << "Wei Kingdom hit your ship! ";
                 board[x][y] = 'o';
                 if (noShips(board, C, B, D, S, P)) {
                     break;
@@ -597,13 +597,13 @@ bool playerAttack(char realboard[11][11], char output[11][11], char playerBoard[
             continue;
         } else {
             if (realboard[x][y] == '~') {
-                cout << "You missed. Your Opponent's turn. \n";
+                cout << "You missed. It's Wei Kingdom's turn. \n";
                 output[x][y] = 'X';
                 showBoard(output);
             } else if (realboard[x][y] == 'N') {
                 output[x][y] = '!';
                 if (NumberGuess() == 0) {
-                    cout << "One of your opponent's ships exploded and sunk itself \n";
+                    cout << "One of Wei Kingdom's ships exploded and sunk itself \n";
                     shipExplode(output, C, B, D, S, P);
                 } else {
                     cout << "One of your ships exploded and sunk itself \n";
@@ -621,30 +621,30 @@ bool playerAttack(char realboard[11][11], char output[11][11], char playerBoard[
                 if (k == 1) {
                     int mc = MC1();
                     if (mc == 0) {
-                        cout << "One of your opponent's ship is at " << showShip(C, B, D, S, P) << '\n';
+                        cout << "One of Wei Kingdom's ship is at " << showShip(C, B, D, S, P) << '\n';
                     }
                     k++;
                 } else if (k == 2) {
                     int mc = MC2();
                     if (mc == 0) {
-                        cout << "One of your opponent's ship is at " << showShip(C, B, D, S, P) << '\n';
+                        cout << "One of Wei Kingdom's ship is at " << showShip(C, B, D, S, P) << '\n';
                     }
                     k++;
                 } else if (k == 3) {
                     int mc = MC3();
                     if (mc == 0) {
-                        cout << "One of your opponent's ship is at " << showShip(C, B, D, S, P) << '\n';
+                        cout << "One of Wei Kingdom's ship is at " << showShip(C, B, D, S, P) << '\n';
                     }
                     k++;
                 } else if (k == 4) {
                     int mc = MC4();
                     if (mc == 0) {
-                        cout << "One of your opponent's ship is at " << showShip(C, B, D, S, P) << '\n';
+                        cout << "One of Wei Kingdom's ship is at " << showShip(C, B, D, S, P) << '\n';
                     }
                     k++;
                 }
             } else {
-                cout << "You hit your opponent's ship!" << '\n';
+                cout << "You hit Wei Kingdom's ship!" << '\n';
                 output[x][y] = 'o';
                 if (noShips(output, C, B, D, S, P)) {
                     break;
@@ -665,13 +665,36 @@ int main() {
     char cpuRealBoard[11][11];
     char cpuoutputBoard[11][11];
     bool end = true;
+    bool win;
     int q = 1;
     int k = 1;
-    string * winner = new string;
-    cout << "----------Battleship----------\n Type 'new' to start a new game, Type 'load' to load an unfinished game. ";
+    int i;
+    string *winner = new string;
+    cout << "----------Battleship (The Three Kingdoms version)----------\n Type 'new' to start a new game, Type 'load' to load an unfinished game. ";
     string game;
     cin >> game;
     if (game == "new") {
+        string name;
+        int i;
+        cout << "Kong Ming: (ノ*゜▽゜*) Welcome to the Three Kingdoms, Brave! I am elf Kong Ming (孔明) , your guide here! Could you please tell me your name?" << endl;
+        cout << "You: ";
+        cin >> name;
+        cout << "Kong Ming: " << name << "? what a pretty name! Unfortunately, I am very sorry to tell you that our Shu Kingdom (蜀國) is facing an unprecedented crisis: our hateful neighbour, the Wei Kingdom（魏國）is launching an attack on us. They are too strong to be defeated! "<< name << ", you are our last hope. Please help us to beat them! "<< endl;
+        cout << "Press 0 to continue ";
+        cin >> i;
+        cout << "You: Kong Ming, there is no need to worry. I will help you." << endl;
+        cout << "Press 0 to continue ";
+        cin >> i;
+        cout << "Kong Ming: Thank you very much, " << name << "! Now you are going to lead our soldiers to fight with the Wei army led by Cao Cao（曹操）, the king of Wei! Defeat him to rescue our kingdom?" << endl;
+        cout << "Press 0 to continue ";
+        cin >> i;
+        cout << "You: I see... but what should I do to defeat him?" << endl;
+        cout << "Press 0 to continue ";
+        cin >> i;
+        cout << "Kong Ming: The battle will take place in the Red Cliffs（赤壁）. Please sink all Cao's balttleships!" << endl;
+        cout << "Press 0 to continue ";
+        cin >> i;
+        cout << "You: Well, okay..." << endl;
         cout << "Stage 1: Prepare for War \nArrange your ships one by one by typing in the location index of both ends." << '\n';
         initializePlayer(playerBoard);
         initializeCPU(cpuRealBoard, cpuoutputBoard);
@@ -682,9 +705,9 @@ int main() {
         cout << "Both players have arranged their ships. The war starts! \nStage 2: Attack your opponents \n";
         k = rand() % 2;
         if (k == 1) {
-            cout << "Player 1 (You) attack first" << '\n';
+            cout << "Shu Kingdom (You) attack first" << '\n';
         } else {
-            cout << "Player 2 (Your Opponent) attack first" << '\n';
+            cout << "Wei Kingdom (Your Opponent) attack first" << '\n';
         }        
     } else if (game == "load") {
         load(playerBoard, "player.txt");
@@ -697,7 +720,8 @@ int main() {
                 return 0;
             } else {
                 if (noShips(cpuoutputBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol)) {
-                    *winner = "Player 1";
+                    *winner = "Shu Kingdom";
+                    win = true;
                     end = false;
                 } else {
                     k++;
@@ -707,16 +731,33 @@ int main() {
         } else {
             cpuAttack(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol);
             if (noShips(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol)) {
-                *winner = "Player 2";
+                *winner = "Wei Kingdom";
+                win = false;
                 end = false;
             } else {
                 k++;
             }
         }
     }
-    cout << "The winner is......" << '\n' << '\n';
-    cout << *winner << "!!!";
-    delete *winner
+    cout << *winner << " WINS!!! \n";
+    if (win) {
+        cout << "Kong Ming: Thank you, Brave! You save our kingdom! We will remember your blessing forever!" << endl;
+        cout << "Press 0 to continue";
+        cin >> i;
+        cout << "You: You are welcome, Kong Ming. It is time for me to leave. Goodbye, and thank you." << endl;
+        cout << "Press 0 to continue";
+        cin >> i;
+        cout << "Kong Ming: Goodbye, hero." << endl;
+    } else {
+        cout << "Despite your stubborn resistance， Cao Cao led the Wei army to win the battle" << endl;
+        cout << "Press 0 to continue";
+        cin >> i;
+        cout << "Cao Cao: What a costly victory! Brave, to me, you are the greatest threat, and I am not going to let you go. Send this him to the prison!" << endl;
+        cout << "Press 0 to continue";
+        cin >> i;
+        cout << "You: NO!!!" << endl;
+    }
+    delete winner;
     winner = 0;
     return 0;
 }
