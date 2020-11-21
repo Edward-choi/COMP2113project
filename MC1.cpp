@@ -15,7 +15,7 @@ int MC1()
     int numWrong = 0;
     while(true){
         cout << "Oops, you have triggered a special event! Now you are going to answer three multiple choice questions. Answer at least two correctly to get the secret reward, or you will receive a random penalty!" << endl;
-        cout << "Question 1: Which US president was not featured in the Mount Rushmore?\nA Franklin D. Roosevelt    B Thomas Jefferson    C Theodore Roosevelt    D Abraham Lincoln" << endl;
+        cout << "Question 1: Who is the all-time leading scorer in NBA history?\nA Kareem-Abdul-Jabbar    B Kobe Bryant    C Karl Malone    D Lebron James" << endl;
         cout << "Your Choice: ";
         cin >> s1;
         if (s1=='A'||s1=='a') cout << "You are correct! Well done!" << endl;
@@ -35,12 +35,12 @@ int MC1()
             cout << "You have got two answers wrong. Better luck next time!" << endl;
             break;
         }
-        cout << "Question 3: Who is the first person to win two Nobel prizes in different fields?\nA Linus Carl Pauling    B Marie Skłodowska Curie    C John Bardeen    D Frederick Sanger" << endl;
+        cout << "Question 3: Which of the following is not a feature of C\nA Array    B Dynamic memory allocation    C Struct constructors    D  Pass by value function" << endl;
         cout << "Your Choice: ";
         cin >> s3;
-        if (s3=='B'||s3=='b') cout << "You are correct! Well done!" << endl;
+        if (s3=='C'||s3=='c') cout << "You are correct! Well done!" << endl;
         else{
-            cout << "Wrong Answer! The correct answer is B." << endl;
+            cout << "Wrong Answer! The correct answer is C." << endl;
             numWrong++;
         }
         if (numWrong==2) {
