@@ -4,7 +4,7 @@ Group 83:
          
 Game Title: Battleship with a Twist
 
-Game Instructions: The player is a Brave summoned to the Three Kingdoms to help the Shu Kingdom defend the Wei Army in the Battle of Red Cliffs. Normal Battleship rules apply. The twist is that some squares are special squares. Hitting them triggers a special game. Winning the game gives benefits, losing gives harm.
+Game Instructions: The player is a Brave summoned to the Three Kingdoms to help the Shu Kingdom defend the Wei Army in the Battle of Red Cliffs. Normal Battleship rules apply. The twist is that some squares are special squares. Hitting them triggers a special game. Winning the game gives benefits, losing gives harm. The input is case-sensitive.
 
                    Example of special game: - RPS
                                             - Number Guessing Game(開口中)
