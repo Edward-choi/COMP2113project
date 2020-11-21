@@ -699,7 +699,6 @@ int main() {
         initializePlayer(playerBoard);
         initializeCPU(cpuRealBoard, cpuoutputBoard);
         specialSquares(cpuRealBoard);
-        showBoard(cpuRealBoard);
         cout << "Both players have arranged their ships. The war starts! \nStage 2: Attack your opponents \n";
         k = rand() % 2;
         if (k == 1) {
