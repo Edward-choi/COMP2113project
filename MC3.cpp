@@ -15,7 +15,7 @@ int MC3()
     int numWrong = 0;
     while(true){
         cout << "Oops, you have triggered a special event! Now you are going to answer three multiple choice questions. Answer at least two correctly to get the secret reward, or you will receive a random penalty!" << endl;
-        cout << "Question 1: Who wrote the fiction Persy Jackson & the Olympians?\nA Arthur C. Clarke    B Rick Riordan    C H. G. Wells    D J.K. Rowling" << endl;
+        cout << "Question 1: Which London Tube station is between Canning Town station and Canary Wharf station?\nA East Greenwich    B North Greenwich    C West Greenwich    D South Greenwich" << endl;
         cout << "Your Choice: ";
         cin >> s1;
         if (s1=='B'||s1=='b') cout << "You are correct! Well done!" << endl;
@@ -23,7 +23,7 @@ int MC3()
             cout << "Wrong Answer! The correct answer is B." << endl;
             numWrong++;
         } 
-        cout << "Question 2: Which tennis player is not in the Big Four?\nA Novak Djokovic    B Andy Murray    C Rafael Nadal    D Roger Federer    E None of the above" << endl;
+        cout << "Question 2: What is the 177th digit of π?\nA 1    B 2    C 3    D 4    E 5" << endl;
         cout << "Your Choice: ";
         cin >> s2;
         if (s2=='E'||s2=='e') cout << "You are correct! Well done!" << endl;
@@ -35,7 +35,7 @@ int MC3()
             cout << "You have got two answers wrong. Better luck next time!" << endl;
             break;
         }
-        cout << "Question 3: Which of the following is not a feature of C\nA Array    B Dynamic memory allocation    C Struct constructors    D  Pass by value function" << endl;
+        cout << "Question 3: Guess what number I'm thinking of.\nA 64    B e    C -810    D √2 " << endl;
         cout << "Your Choice: ";
         cin >> s3;
         if (s3=='C'||s3=='c') cout << "You are correct! Well done!" << endl;
