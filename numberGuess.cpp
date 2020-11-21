@@ -7,7 +7,8 @@
 #include "user.h"
 using namespace std;
 
-//This method calls the User() and Opponent() method until the someone inputs the magic number. If the player wins, it returns 0; Otherwise, 1 is returned.
+//This method calls the User() and Opponent() method until the someone inputs the magic number. 
+//If the player wins, it returns 0; Otherwise, 1 is returned.
 int NumberGuess()
 {
     srand (time(NULL));
