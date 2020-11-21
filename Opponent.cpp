@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// this method generate a random number within the given number range and compare it with the magic number. If them are the same, it tells the player that he/she wins. Else, it shows the random number generated and the new number range.
 void Opponent(int &low, int &high, int &guess, int target)
 {
     srand (time(NULL));
