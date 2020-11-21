@@ -19,4 +19,6 @@ battleshipGame.o: battleshipGame.cpp mc1.h mc2.h mc3.h mc4.h opponent.h user.h n
 main: MC1.o MC2.o MC3.o MC4.o Opponent.o User.o numberGuess.o RPS.o battleshipGame.o
 	g++ MC1.o MC2.o MC3.o MC4.o Opponent.o User.o numberGuess.o RPS.o battleshipGame.o -o main
 
-
+clean:
+	rm -f MC1.o MC2.o MC3.o MC4.o Opponent.o User.o numberGuess.o RPS.o battleshipGame.o main
+.PHONY: clean
