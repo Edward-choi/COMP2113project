@@ -18,6 +18,8 @@ struct ships {
     string Patrol[2];
 } player,cpu;
 
+//To output the grid board in a 11*11 square
+//char board[11][11]: The grid array to be displayed
 void showBoard(char board[11][11]) {
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 11; j++) {
@@ -28,6 +30,11 @@ void showBoard(char board[11][11]) {
     cout << '\n';
 }
 
+//To arrange a ship onto a grid
+//Parameters:
+//board-The grid for placing ships
+//x-A char to identify a ship
+//k-how many squares a ship occupies
 void place_Boats(char board[11][11], char x, int k) {
     while (true) {
         cout << "From which square to which square? ";
@@ -82,6 +89,7 @@ void place_Boats(char board[11][11], char x, int k) {
     }
 }
 
+//Allows the player to arrange all ships on their grid and start the game
 void initializePlayer(char board[11][11]) {
     
     board[0][0] = '/';
@@ -106,6 +114,7 @@ void initializePlayer(char board[11][11]) {
     place_Boats(board, 'P', 2);
 }
 
+//Let the player's opponent(Computer) to arrange its Carrier onto its grid
 void CPUplaceCarrier(char board[11][11]) {
     while (true) {
         srand(time(0));
@@ -131,6 +140,7 @@ void CPUplaceCarrier(char board[11][11]) {
     }
 }
 
+//Let the player's opponent to arrange its Battleship onto its grid without overlapping other ships
 void CPUplaceBattleship(char board[11][11]) {
     while (true) {
         bool overlap = false;
@@ -174,6 +184,8 @@ void CPUplaceBattleship(char board[11][11]) {
     }
 }
 
+//Let the player's opponent to arrange its Destroyer/Submarine onto its grid without overlapping other ships
+//char ship: whether a destroyer or a submarine is being arranged
 void CPUplaceSubmaroyer(char board[11][11], char ship) {
     while (true) {
         bool overlap = false;
@@ -217,6 +229,7 @@ void CPUplaceSubmaroyer(char board[11][11], char ship) {
     }
 }
 
+//Let the player's opponent to arrange its Patrol Boat onto its grid without overlapping other ships
 void CPUplacePatrol(char board[11][11]) {
     while (true) {
         bool overlap = false;
@@ -260,6 +273,8 @@ void CPUplacePatrol(char board[11][11]) {
     }
 }
 
+//Allows the Computer to arrange all its ship into its grid
+//Makes a grid that will be shown to the player
 void initializeCPU(char realboard[11][11], char outputboard[11][11]) {
     realboard[0][0] = '/';
     for (int i = 1; i < 11; i++) {
@@ -285,6 +300,7 @@ void initializeCPU(char realboard[11][11], char outputboard[11][11]) {
     }
 }
 
+//Arrange special squares onto the Computer's grid
 void specialSquares(char board[11][11]) {
     int k = 0;
     while (k < 10) {
@@ -304,6 +320,8 @@ void specialSquares(char board[11][11]) {
     }
 }
 
+//Stores the location of a ship into an array
+//string Carrier[5]: An array that stores the location index of the Carrier, etc.
 void shipLocate(char board[11][11], string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
     int c = 0, b = 0, d = 0, s = 0, p = 0;
     for (int i = 1; i < 11; i++) {
@@ -329,6 +347,7 @@ void shipLocate(char board[11][11], string Carrier[5], string Battleship[4], str
     }
 }
 
+//Finds out a random location index of a random ship and returns the index
 string showShip(string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
     int k = rand() % 5, i = rand(), xc;
     char x, y;
@@ -372,6 +391,7 @@ string showShip(string Carrier[5], string Battleship[4], string Destroyer[3], st
     return location;
 }
 
+//Destroys a random ship on the grid
 void shipExplode(char board[11][11], string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
     int x, y, k;
     k = rand() % 5;
@@ -408,6 +428,8 @@ void shipExplode(char board[11][11], string Carrier[5], string Battleship[4], st
     }
 }
 
+//Checks if the Carrier on the grid has exploded
+//Returns true if it has exploded, false if it's not
 bool carrierLost(char board[11][11], string Carrier[5]) {
     int count = 0;
     for (int i = 0; i < 5; i++) {
@@ -424,6 +446,7 @@ bool carrierLost(char board[11][11], string Carrier[5]) {
     }
 }
 
+//Check if the Battleship on the grid is wrecked
 bool battleshipLost(char board[11][11], string Battleship[4]) {
     int count = 0;
     for (int i = 0; i < 4; i++) {
@@ -440,6 +463,7 @@ bool battleshipLost(char board[11][11], string Battleship[4]) {
     }
 }
 
+//Check if the Destroyer/Submarine on the grid is obliterated
 bool destroyerLost(char board[11][11], string Destroyer[3]) {
     int count = 0;
     for (int i = 0; i < 3; i++) {
@@ -456,6 +480,7 @@ bool destroyerLost(char board[11][11], string Destroyer[3]) {
     }
 }
 
+//Check if the Patrol Boat on the grid is annihilated
 bool patrolLost(char board[11][11], string Patrol[2]) {
     int count = 0;
     for (int i = 0; i < 2; i++) {
@@ -472,6 +497,8 @@ bool patrolLost(char board[11][11], string Patrol[2]) {
     }
 }
 
+//Check if all the ships on the grid has been sunk
+//Returns true if no ships remains, false if at least one ship is on the grid
 bool noShips(char board[11][11], string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
     if (carrierLost(board, Carrier) && battleshipLost(board, Battleship) && destroyerLost(board, Destroyer) && destroyerLost(board, Submarine) && patrolLost(board, Patrol)) {
         return true;
@@ -480,6 +507,8 @@ bool noShips(char board[11][11], string Carrier[5], string Battleship[4], string
     }
 }
 
+//Saves the grid into a file
+//string file:Name of the file
 void save(char board[11][11], string file) {
     ofstream fout;
     fout.open(file);
@@ -487,6 +516,7 @@ void save(char board[11][11], string file) {
     fout.close();
 }
 
+//Loads a grid from a file
 void load(char board[11][11], string file) {
     ifstream fin;
     fin.open(file, ios::in);
@@ -498,6 +528,7 @@ void load(char board[11][11], string file) {
     fin.close();
 }
 
+//Computer attacks the player's grid
 void cpuAttack(char board[11][11], string C[5], string B[4], string D[3], string S[3], string P[2]) {
     cout << "Player 2's turn to attack!" << '\n';
     while (true) {
@@ -529,6 +560,8 @@ void cpuAttack(char board[11][11], string C[5], string B[4], string D[3], string
     }
 }
 
+//Player attacks the Computer's grid
+//Or decides to save the game progress
 bool playerAttack(char realboard[11][11], char output[11][11], char playerBoard[11][11], int &k, string C[5], string B[4], string D[3], string S[3], string P[2], string pC[5], string pB[4], string pD[3], string pS[3], string pP[2]) {
     cout << "Your turn to attck! \n";
     bool e = false;
@@ -683,7 +716,7 @@ int main() {
     }
     cout << "The winner is......" << '\n' << '\n';
     cout << *winner << "!!!";
-
+    delete *winner
     winner = 0;
     return 0;
 }
