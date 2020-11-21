@@ -5,6 +5,7 @@
 #include "mc4.h"
 using namespace std;
 
+//this method asks the player 3 questions and store the answers. If the player answers at least two questions correctly, it returns 0. Else, it returns 1.
 int MC4()
 {
     srand (time(NULL));
