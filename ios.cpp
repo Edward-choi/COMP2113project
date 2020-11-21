@@ -50,3 +50,45 @@ int shipsRead()
     
     return 0;
 }
+void save()
+{
+    ofstream fout;
+    fout.open("ships.txt", ios::app);
+    string** playerBoard2 = new string* [11];
+    string** cpuRealBoard2 = new string* [11];
+    string** cpuoutputBoard2 = new string* [11];
+    for (int i = 0; i < 11; i++) {
+        playerBoard2[i] = new string[11];
+        cpuRealBoard2[i] = new string[11];
+        cpuoutputBoard2[i] = new string[11];
+    }
+    for (int i = 0; i < 11; i++){
+        for (int j = 0; j < 11 j++){
+            playerBoard2[i][j] = playerBoard[i][j];
+            cpuRealBoard2[i][j] = cpuRealBoard[i][j];
+            cpuoutputBoard2[i][j] = cpuoutputBoard[i][j];
+        }
+    }
+    fout.write((char *) playerBoard2, sizeof playerBoard2);
+    fout.write((char *) cpuRealBoard2, sizeof cpuRealBoard2);
+    fout.write((char *) cpuoutputBoard2, sizeof cpuoutputBoard2);
+    fout.close();
+}
+
+void load(string** playerBoard2, string** cpuRealBoard, string** cpuoutputBoard)
+{
+    ifstream fin;
+    fin.open("Input.txt", ios::in);
+    fin.read((char*)&playerBoard2, sizeof(playerBoard2));
+    fin.read((char*)&cpuRealBoard2, sizeof(cpuRealBoard2));
+    fin.read((char*)&ccpuoutputBoard2, sizeof(cpuoutputBoard2));
+
+    for (int i = 0; i < 11; i++){
+        for (int j = 0; j < 11 j++){
+            playerBoard[i][j] = playerBoard2[i][j];
+            cpuRealBoard[i][j] = cpuRealBoard2[i][j];
+            cpuoutputBoard[i][j] = cpuoutputBoard2[i][j];
+        }
+    }
+    fin.close();
+}
