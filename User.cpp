@@ -7,7 +7,8 @@
 
 using namespace std;
 
-//This method asks the player to input a number from the given range. If the number input is exactly the magic number, it tells the player that he/she loses. Else, it shows the new number range.
+//This method asks the player to input a number from the given range. 
+//If the number input is exactly the magic number, it tells the player that he/she loses. Else, it shows the new number range.
 void User(int &low, int &high, int &guess, int target)
 {
     cout << "Please pick a number from " << low << "-" << high << " exclusive: ";
