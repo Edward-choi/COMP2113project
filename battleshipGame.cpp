@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "mc1.h"
 #include "mc2.h"
 #include "mc3.h"
@@ -17,7 +18,7 @@ struct ships {
     string Patrol[2];
 } player,cpu;
 
-void showBoard(string **board) {
+void showBoard(char board[11][11]) {
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 11; j++) {
             cout << board[i][j] << " ";
@@ -27,12 +28,12 @@ void showBoard(string **board) {
     cout << '\n';
 }
 
-void place_Boats(string **board, string x, int k) {
+void place_Boats(char board[11][11], char x, int k) {
     while (true) {
         cout << "From which square to which square? ";
         string start;
         string end;
-        string empty = "~";
+        char empty = '~';
         int count = 0;
         cin >> start >> end;
         int x1 = int(start[0]) - 65;
@@ -60,7 +61,7 @@ void place_Boats(string **board, string x, int k) {
         } else {
             for (int i = x1; i < x2+1; i++) {
                 for (int j = y1; j < y2+1; j++) {
-                    if (empty.compare(board[i+1][j+1]) == 0) {
+                    if (board[i+1][j+1] == empty) {
                         count++;
                     }
                 }
@@ -81,31 +82,31 @@ void place_Boats(string **board, string x, int k) {
     }
 }
 
-void initializePlayer(string **board) {
+void initializePlayer(char board[11][11]) {
     
     board[0][0] = '/';
     for (int i = 1; i < 11; i++) {
         board[i][0] = char(64+i);
-        board[0][i] = to_string(i-1);       
+        board[0][i] = char(47+i);       
         for (int j = 1; j < 11; j++) {
-            board[i][j] = "~";
+            board[i][j] = '~';
         }
     }
     
     showBoard(board);
     cout << "Place your Carrier (5 squares)" << '\n';
-    place_Boats(board, "C", 5);
+    place_Boats(board, 'C', 5);
     cout << "Place your Battleship (4 squares)" << '\n';
-    place_Boats(board, "B", 4);
+    place_Boats(board, 'B', 4);
     cout << "Place your Destroyer (3 squares)" << '\n';
-    place_Boats(board, "D", 3);
+    place_Boats(board, 'D', 3);
     cout << "Place your Submarine (3 squares)" << '\n';
-    place_Boats(board, "S", 3);
+    place_Boats(board, 'S', 3);
     cout << "Place your Patrol Boat (2 squares)" << '\n';
-    place_Boats(board, "P", 2);
+    place_Boats(board, 'P', 2);
 }
 
-void CPUplaceCarrier(string **board) {
+void CPUplaceCarrier(char board[11][11]) {
     while (true) {
         srand(time(0));
         int x = rand() % 10, y = rand() % 10;
@@ -114,7 +115,7 @@ void CPUplaceCarrier(string **board) {
                 continue;
             } else {
                 for (int i = y; i < y+5; i++) {
-                    board[x][i] = "C";
+                    board[x][i] = 'C';
                 }
             }
         } else {
@@ -122,7 +123,7 @@ void CPUplaceCarrier(string **board) {
                 continue;
             } else {
                 for (int i = x; i < x+5; i++) {
-                    board[i][y] = "C";
+                    board[i][y] = 'C';
                 }
             }
         }
@@ -130,7 +131,7 @@ void CPUplaceCarrier(string **board) {
     }
 }
 
-void CPUplaceBattleship(string **board) {
+void CPUplaceBattleship(char board[11][11]) {
     while (true) {
         bool overlap = false;
         int x = rand() % 10, y = rand() % 10;
@@ -139,7 +140,7 @@ void CPUplaceBattleship(string **board) {
                 continue;
             } else {
                 for (int i = y; i < y+4; i++) {
-                    if (board[x][i] != "~") {
+                    if (board[x][i] != '~') {
                         overlap = true;
                     }
                 }
@@ -147,7 +148,7 @@ void CPUplaceBattleship(string **board) {
                     continue;
                 } else {
                     for (int i = y; i < y+4; i++) {
-                        board[x][i] = "B";
+                        board[x][i] = 'B';
                     }
                 }
             }
@@ -156,7 +157,7 @@ void CPUplaceBattleship(string **board) {
                 continue;
             } else {
                 for (int i = x; i < x+4; i++) {
-                    if (board[i][y] != "~") {
+                    if (board[i][y] != '~') {
                         overlap = true;
                     }
                 }
@@ -164,7 +165,7 @@ void CPUplaceBattleship(string **board) {
                     continue;
                 } else {
                     for (int i = x; i < x+4; i++) {
-                        board[i][y] = "B";
+                        board[i][y] = 'B';
                     }
                 }
             }
@@ -173,7 +174,7 @@ void CPUplaceBattleship(string **board) {
     }
 }
 
-void CPUplaceSubmaroyer(string **board, string ship) {
+void CPUplaceSubmaroyer(char board[11][11], char ship) {
     while (true) {
         bool overlap = false;
         int x = rand() % 10, y = rand() % 10;
@@ -182,7 +183,7 @@ void CPUplaceSubmaroyer(string **board, string ship) {
                 continue;
             } else {
                 for (int i = y; i < y+3; i++) {
-                    if (board[x][i] != "~") {
+                    if (board[x][i] != '~') {
                         overlap = true;
                     }
                 }
@@ -199,7 +200,7 @@ void CPUplaceSubmaroyer(string **board, string ship) {
                 continue;
             } else {
                 for (int i = x; i < x+3; i++) {
-                    if (board[i][y] != "~") {
+                    if (board[i][y] != '~') {
                         overlap = true;
                     }
                 }
@@ -216,7 +217,7 @@ void CPUplaceSubmaroyer(string **board, string ship) {
     }
 }
 
-void CPUplacePatrol(string **board) {
+void CPUplacePatrol(char board[11][11]) {
     while (true) {
         bool overlap = false;
         int x = rand() % 10, y = rand() % 10;
@@ -225,7 +226,7 @@ void CPUplacePatrol(string **board) {
                 continue;
             } else {
                 for (int i = y; i < y+2; i++) {
-                    if (board[x][i] != "~") {
+                    if (board[x][i] != '~') {
                         overlap = true;
                     }
                 }
@@ -233,7 +234,7 @@ void CPUplacePatrol(string **board) {
                     continue;
                 } else {
                     for (int i = y; i < y+2; i++) {
-                        board[x][i] = "P";
+                        board[x][i] = 'P';
                     }
                 }
             }
@@ -242,7 +243,7 @@ void CPUplacePatrol(string **board) {
                 continue;
             } else {
                 for (int i = x; i < x+2; i++) {
-                    if (board[i][y] != "~") {
+                    if (board[i][y] != '~') {
                         overlap = true;
                     }
                 }
@@ -250,7 +251,7 @@ void CPUplacePatrol(string **board) {
                     continue;
                 } else {
                     for (int i = x; i < x+2; i++) {
-                        board[i][y] = "P";
+                        board[i][y] = 'P';
                     }
                 }
             }
@@ -259,42 +260,42 @@ void CPUplacePatrol(string **board) {
     }
 }
 
-void initializeCPU(string **realboard, string **outputboard) {
+void initializeCPU(char realboard[11][11], char outputboard[11][11]) {
     realboard[0][0] = '/';
     for (int i = 1; i < 11; i++) {
         realboard[i][0] = char(64+i);
-        realboard[0][i] = to_string(i-1);       
+        realboard[0][i] = char(47+i);       
         for (int j = 1; j < 11; j++) {
-            realboard[i][j] = "~";
+            realboard[i][j] = '~';
         }
     }
     CPUplaceCarrier(realboard);
     CPUplaceBattleship(realboard);
-    CPUplaceSubmaroyer(realboard, "D");
-    CPUplaceSubmaroyer(realboard, "S");
+    CPUplaceSubmaroyer(realboard, 'D');
+    CPUplaceSubmaroyer(realboard, 'S');
     CPUplacePatrol(realboard);
     
     outputboard[0][0] = '/';
     for (int i = 1; i < 11; i++) {
         outputboard[i][0] = char(64+i);
-        outputboard[0][i] = to_string(i-1);       
+        outputboard[0][i] = char(47+i);       
         for (int j = 1; j < 11; j++) {
-            outputboard[i][j] = "~";
+            outputboard[i][j] = '~';
         }
     }
 }
 
-void specialSquares(string **board) {
+void specialSquares(char board[11][11]) {
     int k = 0;
     while (k < 10) {
         int x = (rand() % 10) + 1, y = (rand() % 10) + 1;
-        if (board[x][y] == "~") {
+        if (board[x][y] == '~') {
             if (k > 5) {
-                board[x][y] = "Q";
+                board[x][y] = 'Q';
             } else if (k > 2) {
-                board[x][y] = "R";
+                board[x][y] = 'R';
             } else {
-                board[x][y] = "N";
+                board[x][y] = 'N';
             }
         } else {
             continue;
@@ -303,24 +304,24 @@ void specialSquares(string **board) {
     }
 }
 
-void shipLocate(string **board, string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
+void shipLocate(char board[11][11], string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
     int c = 0, b = 0, d = 0, s = 0, p = 0;
     for (int i = 1; i < 11; i++) {
         for (int j = 1; j < 11; j++) {
             string index = to_string(i-1) + to_string(j-1);
-            if (board[i][j] == "C") {
+            if (board[i][j] == 'C') {
                 Carrier[c] = index;
                 c++;
-            } else if (board[i][j] == "B") {
+            } else if (board[i][j] == 'B') {
                 Battleship[b] = index;
                 b++;
-            } else if (board[i][j] == "D") {
+            } else if (board[i][j] == 'D') {
                 Destroyer[d] = index;
                 d++;
-            } else if (board[i][j] == "S") {
+            } else if (board[i][j] == 'S') {
                 Submarine[s] = index;
                 s++;
-            } else if (board[i][j] == "P") {
+            } else if (board[i][j] == 'P') {
                 Patrol[p] = index;
                 p++;
             }
@@ -371,48 +372,48 @@ string showShip(string Carrier[5], string Battleship[4], string Destroyer[3], st
     return location;
 }
 
-void shipExplode(string **board, string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
+void shipExplode(char board[11][11], string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
     int x, y, k;
     k = rand() % 5;
     if (k == 0) {
         for (int i = 0; i < 5; i++) {
             x = int(Carrier[i][0]) - 47;
             y = int(Carrier[i][1]) - 47;
-            board[x][y] = "o";
+            board[x][y] = 'o';
         }
     } else if (k == 1) {
         for (int i = 0; i < 4; i++) {
             x = int(Battleship[i][0]) - 47;
             y = int(Battleship[i][1]) - 47;
-            board[x][y] = "o";
+            board[x][y] = 'o';
         }
     } else if (k == 2) {
         for (int i = 0; i < 3; i++) {
             x = int(Destroyer[i][0]) - 47;
             y = int(Destroyer[i][1]) - 47;
-            board[x][y] = "o";
+            board[x][y] = 'o';
         }
     } else if (k == 3) {
         for (int i = 0; i < 3; i++) {
             x = int(Submarine[i][0]) - 47;
             y = int(Submarine[i][1]) - 47;
-            board[x][y] = "o";
+            board[x][y] = 'o';
         }
     } else {
         for (int i = 0; i < 2; i++) {
             x = int(Patrol[i][0]) - 47;
             y = int(Patrol[i][1]) - 47;
-            board[x][y] = "o";
+            board[x][y] = 'o';
         }
     }
 }
 
-bool carrierLost(string **board, string Carrier[5]) {
+bool carrierLost(char board[11][11], string Carrier[5]) {
     int count = 0;
     for (int i = 0; i < 5; i++) {
         int x = (Carrier[i][0] - '0');
         int y = (Carrier[i][1] - '0');
-        if (board[x+1][y+1] == "o") {
+        if (board[x+1][y+1] == 'o') {
             count++; 
         }
     }
@@ -423,12 +424,12 @@ bool carrierLost(string **board, string Carrier[5]) {
     }
 }
 
-bool battleshipLost(string **board, string Battleship[4]) {
+bool battleshipLost(char board[11][11], string Battleship[4]) {
     int count = 0;
     for (int i = 0; i < 4; i++) {
         int x = (Battleship[i][0] - '0');
         int y = (Battleship[i][1] - '0');
-        if (board[x+1][y+1] == "o") {
+        if (board[x+1][y+1] == 'o') {
             count++; 
         }
     }
@@ -439,12 +440,12 @@ bool battleshipLost(string **board, string Battleship[4]) {
     }
 }
 
-bool destroyerLost(string **board, string Destroyer[3]) {
+bool destroyerLost(char board[11][11], string Destroyer[3]) {
     int count = 0;
     for (int i = 0; i < 3; i++) {
         int x = (Destroyer[i][0] - '0');
         int y = (Destroyer[i][1] - '0');
-        if (board[x+1][y+1] == "o") {
+        if (board[x+1][y+1] == 'o') {
             count++; 
         }
     }
@@ -455,12 +456,12 @@ bool destroyerLost(string **board, string Destroyer[3]) {
     }
 }
 
-bool patrolLost(string **board, string Patrol[2]) {
+bool patrolLost(char board[11][11], string Patrol[2]) {
     int count = 0;
     for (int i = 0; i < 2; i++) {
         int x = (Patrol[i][0] - '0');
         int y = (Patrol[i][1] - '0');
-        if (board[x+1][y+1] == "o") {
+        if (board[x+1][y+1] == 'o') {
             count++; 
         }
     }
@@ -471,7 +472,7 @@ bool patrolLost(string **board, string Patrol[2]) {
     }
 }
 
-bool noShips(string **board, string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
+bool noShips(char board[11][11], string Carrier[5], string Battleship[4], string Destroyer[3], string Submarine[3], string Patrol[2]) {
     if (carrierLost(board, Carrier) && battleshipLost(board, Battleship) && destroyerLost(board, Destroyer) && destroyerLost(board, Submarine) && patrolLost(board, Patrol)) {
         return true;
     } else {
@@ -479,25 +480,43 @@ bool noShips(string **board, string Carrier[5], string Battleship[4], string Des
     }
 }
 
-void cpuAttack(string **board, string C[5], string B[4], string D[3], string S[3], string P[2]) {
+void save(char board[11][11], string file) {
+    ofstream fout;
+    fout.open(file);
+    fout.write((char *) board, 121);
+    fout.close();
+}
+
+void load(char board[11][11], string file) {
+    ifstream fin;
+    fin.open(file, ios::in);
+    for (int i = 0; i < 11; i++){
+        for (int j = 0; j < 11; j++){
+            fin >> board[i][j];
+        }
+    }
+    fin.close();
+}
+
+void cpuAttack(char board[11][11], string C[5], string B[4], string D[3], string S[3], string P[2]) {
     cout << "Player 2's turn to attack!" << '\n';
     while (true) {
         int x = rand() % 10 + 1, y = rand() % 10 + 1;
         string index;
-        if (board[x][y] == "o" || board[x][y] == "X") {
+        if (board[x][y] == 'o' || board[x][y] == 'X') {
             continue;
         } else {
             char xcoor = char(x+64), ycoor = char(y+47);
             index.append(1, xcoor);
             index.append(1, ycoor);
             cout << "Player 2 attacked " << index << "!" << '\n';
-            if (board[x][y] == "~") {
+            if (board[x][y] == '~') {
                 cout << "Player 2 missed! Your turn." << '\n';
-                board[x][y] = "X";
+                board[x][y] = 'X';
                 showBoard(board);
             } else {
                 cout << "Player 2 hit your ship! ";
-                board[x][y] = "o";
+                board[x][y] = 'o';
                 if (noShips(board, C, B, D, S, P)) {
                     break;
                 } else {
@@ -510,15 +529,24 @@ void cpuAttack(string **board, string C[5], string B[4], string D[3], string S[3
     }
 }
 
-void playerAttack(string **realboard, string **output, string **playerBoard, int &k, string C[5], string B[4], string D[3], string S[3], string P[2], string pC[5], string pB[4], string pD[3], string pS[3], string pP[2]) {
+bool playerAttack(char realboard[11][11], char output[11][11], char playerBoard[11][11], int &k, string C[5], string B[4], string D[3], string S[3], string P[2], string pC[5], string pB[4], string pD[3], string pS[3], string pP[2]) {
     cout << "Your turn to attck! \n";
-    while (true) {
+    bool e = false;
+    while (!e) {
         showBoard(output);
         cout << "Enter the square you'd like to attack: ";
         string index;
         cin >> index;
         int x = int(index[0]) - 64;
         int y = int(index[1]) - 47;
+        if (index == "save") {
+            save(playerBoard, "player.txt");
+            save(realboard, "real.txt");
+            save(output, "out.txt");
+            e = true;
+            cout << "Game Saved, See you next time!";
+            continue;
+        }
         if (index.length() != 2) {
             cout << "Incorrect index format! \n";
             continue;
@@ -531,16 +559,16 @@ void playerAttack(string **realboard, string **output, string **playerBoard, int
             cout << "Column index must be between 0 and 9! \n";
             continue;
         }
-        if (output[x][y] != "~") {
+        if (output[x][y] != '~') {
             cout << "That square has already been hit. Try again \n";
             continue;
         } else {
-            if (realboard[x][y] == "~") {
+            if (realboard[x][y] == '~') {
                 cout << "You missed. Your Opponent's turn. \n";
-                output[x][y] = "X";
+                output[x][y] = 'X';
                 showBoard(output);
-            } else if (realboard[x][y] == "N") {
-                output[x][y] = "!";
+            } else if (realboard[x][y] == 'N') {
+                output[x][y] = '!';
                 if (NumberGuess() == 0) {
                     cout << "One of your opponent's ships exploded and sunk itself \n";
                     shipExplode(output, C, B, D, S, P);
@@ -548,15 +576,15 @@ void playerAttack(string **realboard, string **output, string **playerBoard, int
                     cout << "One of your ships exploded and sunk itself \n";
                     shipExplode(playerBoard, pC, pB, pD, pS, pP);
                 }
-            } else if (realboard[x][y] == "R") {
-                output[x][y] = "!";
+            } else if (realboard[x][y] == 'R') {
+                output[x][y] = '!';
                 if (RPS() == 0) {
                     continue;
                 } else {
                     cpuAttack(playerBoard, pC, pB, pD, pS, pP);
                 }
-            } else if (realboard[x][y] == "Q") {
-                output[x][y] = "!";
+            } else if (realboard[x][y] == 'Q') {
+                output[x][y] = '!';
                 if (k == 1) {
                     int mc = MC1();
                     if (mc == 0) {
@@ -584,7 +612,7 @@ void playerAttack(string **realboard, string **output, string **playerBoard, int
                 }
             } else {
                 cout << "You hit your opponent's ship!" << '\n';
-                output[x][y] = "o";
+                output[x][y] = 'o';
                 if (noShips(output, C, B, D, S, P)) {
                     break;
                 } else {
@@ -595,46 +623,54 @@ void playerAttack(string **realboard, string **output, string **playerBoard, int
         }
         break;
     }
+    return e;
 }
 
 int main() {
     int size = 11;
-    string** playerBoard = new string* [size];
-    string** cpuRealBoard = new string* [size];
-    string** cpuoutputBoard = new string* [size];
-    for (int i = 0; i < size; i++) {
-        playerBoard[i] = new string[size];
-        cpuRealBoard[i] = new string[size];
-        cpuoutputBoard[i] = new string[size];
-    }
+    char playerBoard[11][11];
+    char cpuRealBoard[11][11];
+    char cpuoutputBoard[11][11];
     bool end = true;
     int q = 1;
+    int k = 1;
     string * winner = new string;
-    cout << "----------Battleship----------" << '\n';
-    cout << "Stage 1: Prepare for War" << '\n';
-    cout << "Arrange your ships one by one by typing in the location index of both ends." << '\n';
-    initializePlayer(playerBoard);
-    initializeCPU(cpuRealBoard, cpuoutputBoard);
-    specialSquares(cpuRealBoard);
-    showBoard(cpuRealBoard);
-    shipLocate(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol);
-    shipLocate(cpuRealBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol);
-    cout << "Both players have arranged their ships. The war starts! \nStage 2: Attack your opponents \n";
-    int k = rand() % 10;
-    if (k % 2 == 1) {
-        cout << "Player 1 (You) attack first" << '\n';
-    } else {
-        cout << "Player 2 (Your Opponent) attack first" << '\n';
+    cout << "----------Battleship----------\n Type 'new' to start a new game, Type 'load' to load an unfinished game. ";
+    string game;
+    cin >> game;
+    if (game == "new") {
+        cout << "Stage 1: Prepare for War \nArrange your ships one by one by typing in the location index of both ends." << '\n';
+        initializePlayer(playerBoard);
+        initializeCPU(cpuRealBoard, cpuoutputBoard);
+        specialSquares(cpuRealBoard);
+        showBoard(cpuRealBoard);
+        shipLocate(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol);
+        shipLocate(cpuRealBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol);
+        cout << "Both players have arranged their ships. The war starts! \nStage 2: Attack your opponents \n";
+        k = rand() % 2;
+        if (k == 1) {
+            cout << "Player 1 (You) attack first" << '\n';
+        } else {
+            cout << "Player 2 (Your Opponent) attack first" << '\n';
+        }        
+    } else if (game == "load") {
+        load(playerBoard, "player.txt");
+        load(cpuRealBoard, "real.txt");
+        load(cpuoutputBoard, "out.txt");
     }
     while (end) {
         if (k % 2 == 1) {
-            playerAttack(cpuRealBoard, cpuoutputBoard, playerBoard, q, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol);
-            if (noShips(cpuoutputBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol)) {
-                *winner = "Player 1";
-                end = false;
+            if (playerAttack(cpuRealBoard, cpuoutputBoard, playerBoard, q, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol)) {
+                return 0;
             } else {
-                k++;
+                if (noShips(cpuoutputBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol)) {
+                    *winner = "Player 1";
+                    end = false;
+                } else {
+                    k++;
+                }
             }
+
         } else {
             cpuAttack(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol);
             if (noShips(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol)) {
@@ -647,15 +683,7 @@ int main() {
     }
     cout << "The winner is......" << '\n' << '\n';
     cout << *winner << "!!!";
-    for (int i = 0; i < size; i++) {
-        delete[] playerBoard[i];
-        delete[] cpuRealBoard[i];
-        delete[] cpuoutputBoard[i];
-    }
-    delete[] playerBoard;
-    delete[] cpuRealBoard;
-    delete[] cpuoutputBoard;
-    delete winner;
+
     winner = 0;
     return 0;
 }
