@@ -6,7 +6,8 @@
 #include "rps.h"
 using namespace std;
 
-//This method reads the player's input using a linked list and randomly picks one from rock, paper and scissors. The outputs are then compared until the the best-of-3 game ends. If the player wins, it returns 0; Otherwise, it returns 1.
+//This method reads the player's input using a linked list and randomly picks one from rock, paper and scissors. 
+//The outputs are then compared until the the best-of-3 game ends. If the player wins, it returns 0; Otherwise, it returns 1.
 int RPS() {
     struct RPS {
     	int userNum;
