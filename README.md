@@ -29,4 +29,5 @@ Features to be implemented:
     Special games stored in multiple files and access them using Makefile
    
 Compilation instructions: Download all Makefile, .cpp and .h files. Compile them with the command "make main". Then all .cpp and .h files will be compiled automatically.
+
 Execution instructions: Execute the main.cpp with the command "./main". 
