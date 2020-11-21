@@ -2,7 +2,7 @@ MC1.o: MC1.cpp mc1.h
 	g++ -c MC1.cpp
 MC2.o: MC2.cpp mc2.h
 	g++ -c MC2.cpp
-MC2.o: MC3.cpp mc3.h
+MC3.o: MC3.cpp mc3.h
 	g++ -c MC3.cpp
 MC4.o: MC4.cpp mc4.h
 	g++ -c MC4.cpp
