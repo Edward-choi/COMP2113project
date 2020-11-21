@@ -700,8 +700,6 @@ int main() {
         initializeCPU(cpuRealBoard, cpuoutputBoard);
         specialSquares(cpuRealBoard);
         showBoard(cpuRealBoard);
-        shipLocate(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol);
-        shipLocate(cpuRealBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol);
         cout << "Both players have arranged their ships. The war starts! \nStage 2: Attack your opponents \n";
         k = rand() % 2;
         if (k == 1) {
@@ -714,6 +712,8 @@ int main() {
         load(cpuRealBoard, "real.txt");
         load(cpuoutputBoard, "out.txt");
     }
+    shipLocate(playerBoard, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol);
+    shipLocate(cpuRealBoard, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol);
     while (end) {
         if (k % 2 == 1) {
             if (playerAttack(cpuRealBoard, cpuoutputBoard, playerBoard, q, cpu.Carrier, cpu.Battleship, cpu.Destroyer, cpu.Submarine, cpu.Patrol, player.Carrier, player.Battleship, player.Destroyer, player.Submarine, player.Patrol)) {
@@ -742,18 +742,18 @@ int main() {
     cout << *winner << " WINS!!! \n";
     if (win) {
         cout << "Kong Ming: Thank you, Brave! You save our kingdom! We will remember your blessing forever!" << endl;
-        cout << "Press 0 to continue";
+        cout << "Press 0 to continue ";
         cin >> i;
         cout << "You: You are welcome, Kong Ming. It is time for me to leave. Goodbye, and thank you." << endl;
-        cout << "Press 0 to continue";
+        cout << "Press 0 to continue ";
         cin >> i;
         cout << "Kong Ming: Goodbye, hero." << endl;
     } else {
         cout << "Despite your stubborn resistance， Cao Cao led the Wei army to win the battle" << endl;
-        cout << "Press 0 to continue";
+        cout << "Press 0 to continue ";
         cin >> i;
         cout << "Cao Cao: What a costly victory! Brave, to me, you are the greatest threat, and I am not going to let you go. Send this him to the prison!" << endl;
-        cout << "Press 0 to continue";
+        cout << "Press 0 to continue ";
         cin >> i;
         cout << "You: NO!!!" << endl;
     }
