@@ -1,6 +1,6 @@
 string name;
 int i;
-cout << "Kong Ming: Welcome to the Three Kingdoms, Brave! I am elf Kong Ming (孔明) , your guide here! Could you please tell me your name?"; << endl;
+cout << "Kong Ming: (ノ*゜▽゜*) Welcome to the Three Kingdoms, Brave! I am elf Kong Ming (孔明) , your guide here! Could you please tell me your name?"; << endl;
 cout << "You: ";
 cin << name;
 cout << "Kong Ming: " << name << "? what a pretty name! Unfortunately, I am very sorry to tell you that our Shu Kingdom (蜀國) is facing an unprecedented crisis: our hateful neighbour, the Wei Kingdom（魏國）is launching an attack on us. They are too strong to be defeated! "<< name << ", you are our last hope. Please help us to beat them! "<< endl;
